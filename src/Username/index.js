@@ -13,9 +13,12 @@ class UsernameForm extends Component {
  handleSubmit = e => {
     e.preventDefault();
     console.log('submitted !!');
+    this.props.handleSubmit(this.state.username)
   };
 
-  handleChange = e => console.log(e.target.value);
+  handleChange = e => {
+      this.setState({username: e.target.value})
+  };
 
   render() {
     return (
@@ -32,7 +35,6 @@ class UsernameForm extends Component {
                     <Button
                         color="blue"
                         type="submit"
-                        onClick={() => console.log('Clicked!')}
                     >
                     Submit
                 </Button>

@@ -11,6 +11,7 @@ class App extends Component {
        super()
        this.state = {
           currentUsername: '',
+          currentId: '',
           currentScreen: 'usernameInputScreen'
         }
         this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this)
@@ -24,13 +25,16 @@ class App extends Component {
           },
           body: JSON.stringify({ username }),
         })
-          .then(response => {
-            this.setState({
-              currentUsername: username,
-              currentScreen: 'ChatScreen'
-            })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          this.setState({
+            currentId: data.id,
+            currentUsername: data.name,
+            currentScreen: 'ChatScreen'
           })
-          .catch(error => console.error('error', error))
+        })
+        .catch(error => console.error('error', error))
       }
 
   render() {
@@ -45,7 +49,7 @@ thus this conditional doesn't open the chatscreen when a username is submitted
        return <UsernameForm handleSubmit = {this.onUsernameSubmitted}/>
       }
      if (this.state.currentScreen === 'ChatScreen') {
-      return <Layout Sidebar={Sidebar} Chatbox={Chatbox} />
+      return <Layout Sidebar={Sidebar} Chatbox={() => <Chatbox currentId={this.state.currentId} />} />
     }
     
   }

@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const Chatkit = require('pusher-chatkit-server')
+const uuid = require('uuid/v4');
 
 const app = express()
 
@@ -16,10 +17,12 @@ app.use(cors())
 
 app.post('/users', (req, res) => {
   const { username } = req.body
+  const payload = {name: username, id: uuid()}
   chatkit
-    .createUser(username, username)
-    .then(() => res.sendStatus(201))
+    .createUser(payload)
+    .then(() => res.status(201).json(payload))
     .catch(error => {
+      console.log(error)
       if (error.error_type === 'services/chatkit/user/user_already_exists') {
         res.sendStatus(200)
       } else {
@@ -28,9 +31,17 @@ app.post('/users', (req, res) => {
     })
 })
 
+// app.post('/authenticate', (req, res) => {
+//   console.log(req.body, req.query)
+//   const { grant_type } = req.body
+//   console.log(grant_type)
+//   res.json(chatkit.authenticate({ grant_type }, req.query.user_id))
+// })
+
 app.post('/authenticate', (req, res) => {
   const { grant_type } = req.body
-  res.json(chatkit.authenticate({ grant_type }, req.query.user_id))
+  chatkit.getUsersByIds({ userIds: ['hey'] }).then(a => console.log(a))
+  res.json(chatkit.authenticate({ grant_type, userId: req.query.user_id }))
 })
 
 const PORT = 3001

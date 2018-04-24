@@ -26,22 +26,23 @@ class Chatbox extends Component {
   "expected userId to be of type string but was of type undefined"
 */
   
-// componentDidMount () {
-//     const chatManager = new Chatkit.ChatManager({
-//       instanceLocator: 'v1:us1:f722c949-ddf2-4e88-908e-20ff810e0e21',
-//       userId: this.props.currentUsername, //problem in this line, expected userId to be String, while it is undefined.
-//       tokenProvider: new Chatkit.TokenProvider({
-//         url: 'http://localhost:3001/authenticate',
-//       }),
-//     })
+componentDidMount () {
+    const chatManager = new Chatkit.ChatManager({
+      instanceLocator: 'v1:us1:f722c949-ddf2-4e88-908e-20ff810e0e21',
+      userId: this.props.currentId, //problem in this line, expected userId to be String, while it is undefined.
+      tokenProvider: new Chatkit.TokenProvider({
+        url: 'http://localhost:3001/authenticate',
+      }),
+    })
 
-//     chatManager
-//       .connect()
-//       .then(currentUser => {
-//         this.setState({ currentUser })
-//       })
-//       .catch(error => console.error('error', error))
-//   }
+    chatManager
+      .connect()
+      .then(currentUser => {
+        console.log(currentUser)
+        this.setState({ currentUser })
+      })
+      .catch(error => console.error('error', error))
+  }
 
   handleChange = e => console.log(e.target.value);
 
