@@ -1,0 +1,26 @@
+{
+  "name": "Chatkit-Mac",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/electron-starter.js",
+  "homepage": "./",
+  "dependencies": {
+    "@pusher/chatkit": "^0.7.9",
+    "cors": "^2.8.4",
+    "pusher-chatkit-server": "^0.11.2",
+    "react": "^16.3.2",
+    "react-desktop": "^0.3.5",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.8.4"
+  }
+}

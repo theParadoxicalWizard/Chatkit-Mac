@@ -1,0 +1,15 @@
+.message {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  align-content: stretch;
+  flex-wrap: wrap
+}
+
+.message-text{
+  width: 80%;
+}
+
+.message > div {
+  width: 82%;
+}
