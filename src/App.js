@@ -11,7 +11,7 @@ class App extends Component {
        super()
        this.state = {
           currentUsername: '',
-          currentScreen: 'ChatScreen'
+          currentScreen: 'usernameInputScreen'
         }
         this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this)
       }
