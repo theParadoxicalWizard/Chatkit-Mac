@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './Chatbox.css';
-<<<<<<< HEAD
 import Chatkit from '@pusher/chatkit'
-=======
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
 import {
   ListView,
   ListViewSection,
@@ -15,7 +12,6 @@ import {
 } from 'react-desktop/macOs';
 
 class Chatbox extends Component {
-<<<<<<< HEAD
   constructor(props) {
     super(props)
     this.state = {
@@ -47,13 +43,6 @@ class Chatbox extends Component {
 //       .catch(error => console.error('error', error))
 //   }
 
-=======
-  constructor() {
-    super();
-    this.state = { selected: null };
-  }
-
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
   handleChange = e => console.log(e.target.value);
 
   handleSubmit = e => {
@@ -63,13 +52,8 @@ class Chatbox extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <div> 
-         <ListView background="#f1f2f4" width="500" height="555">
-=======
       <div>
         <ListView background="#f1f2f4" width="500" height="555">
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
           <ListViewSection header={this.renderSectionHeader('Messages')}>
             {this.renderItem('Item 1', 'This is the first item.')}
             {this.renderItem('Item 2', 'This is the second item.')}
@@ -90,15 +74,9 @@ class Chatbox extends Component {
           >
             Press me!
           </Button>
-<<<<<<< HEAD
         </form> 
       
       </div>
-    
-=======
-        </form>
-      </div>
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
     );
   }
 

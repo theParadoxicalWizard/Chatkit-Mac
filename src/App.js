@@ -3,7 +3,6 @@ import Layout from './Layout';
 import Chatbox from './Chatbox';
 import Sidebar from './Sidebar'
 import './App.css';
-<<<<<<< HEAD
 import UsernameForm from './Username/index'
 
 class App extends Component {
@@ -49,16 +48,6 @@ thus this conditional doesn't open the chatscreen when a username is submitted
       return <Layout Sidebar={Sidebar} Chatbox={Chatbox} />
     }
     
-=======
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Layout Sidebar={Sidebar} Chatbox={Chatbox} />
-      </div>
-    );
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
   }
 }
 
