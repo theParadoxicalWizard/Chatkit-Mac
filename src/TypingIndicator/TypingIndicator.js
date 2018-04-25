@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 
 class TypingIndicator extends Component {
+
   render() {
+
     if (this.props.usersWhoAreTyping.length > 0) {
+    
       return (
         <div>
           {`${this.props.usersWhoAreTyping

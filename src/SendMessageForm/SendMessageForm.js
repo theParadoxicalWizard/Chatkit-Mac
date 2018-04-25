@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 import './SendMessage.css';
+import {
+  
+  Button,
+  TextInput
+} from 'react-desktop/macOs';
 
  class SendMessageForm extends Component {
    constructor(props) {
@@ -26,16 +31,23 @@ import './SendMessage.css';
 
    render() {
      return (
-       <div className="container">
-         <div>
-           <form onSubmit={this.onSubmit} className="form-styles">
-             <input
+       <div >
+         <div className="">
+           <form onSubmit={this.onSubmit} className="">
+             <TextInput
                type="text"
                placeholder="Type a message here then hit ENTER"
                onChange={this.onChange}
                value={this.state.text}
-               className="input-styles"
+               className="message-text"
              />
+             <Button
+                color="blue"
+                type="submit"
+                onClick={() => console.log('Clicked!')}
+          >
+            Send
+          </Button>
            </form>
          </div>
        </div>

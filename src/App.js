@@ -1,49 +1,57 @@
 import React, { Component } from 'react';
+import Chatkit from '@pusher/chatkit'
 import Layout from './Layout';
 import Chatbox from './Chatbox';
-import Sidebar from './Sidebar'
-//import WhosOnlineList from './WhosOnlineList/WhosOnlineList'
+import Sidebar from './Sidebar';
+import TypingIndicator from './TypingIndicator/TypingIndicator'
 import './App.css';
-import UsernameForm from './Username/index'
+import UsernameForm from './Username/index';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
-    constructor() {
-       super()
-       this.state = {
-          currentUsername: '',
-          currentId: '',
-          currentScreen: 'usernameInputScreen'
-        }
-        this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this)
-      }
-    
-      onUsernameSubmitted(username) {
-        fetch('http://localhost:3001/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          this.setState({
-            currentId: data.id,
-            currentUsername: data.name,
-            currentScreen: 'ChatScreen'
-          })
-        })
-        .catch(error => console.error('error', error))
-      }
+      currentUsername: '',
+      currentId: '',
+      currentScreen: 'usernameInputScreen'
+    };
+    this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this);
+  }
+
+  onUsernameSubmitted(username) {
+    fetch('http://localhost:3001/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          currentId: data.id,
+          currentUsername: data.name,
+          currentScreen: 'ChatScreen'
+        });
+      })
+      .catch(error => console.error('error', error));
+  }
 
   render() {
-      if (this.state.currentScreen === 'usernameInputScreen') {
-       return <UsernameForm handleSubmit = {this.onUsernameSubmitted}/>
-      }
-     if (this.state.currentScreen === 'ChatScreen') {
-      return <Layout Sidebar={Sidebar} Chatbox={() => <Chatbox currentId={this.state.currentId} />} />
+    if (this.state.currentScreen === 'usernameInputScreen') {
+      return <UsernameForm handleSubmit={this.onUsernameSubmitted} />;
+    }
+    if (this.state.currentScreen === 'ChatScreen') {
+      return (
+        <Layout
+          currentId={this.state.currentId}
+          Sidebar={Sidebar}
+          Chatbox={Chatbox}
+          TypingIndicator = {TypingIndicator}
+        />
+      );
     }
   }
 }
@@ -51,17 +59,11 @@ class App extends Component {
 export default App;
 
 
-
-
-
-
-
-
-
 // import React, { Component } from 'react';
 // import Layout from './Layout';
 // import Chatbox from './Chatbox';
 // import Sidebar from './Sidebar'
+// //import WhosOnlineList from './WhosOnlineList/WhosOnlineList'
 // import './App.css';
 // import UsernameForm from './Username/index'
 
@@ -71,6 +73,7 @@ export default App;
 //        super()
 //        this.state = {
 //           currentUsername: '',
+//           currentId: '',
 //           currentScreen: 'usernameInputScreen'
 //         }
 //         this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this)
@@ -84,30 +87,25 @@ export default App;
 //           },
 //           body: JSON.stringify({ username }),
 //         })
-//           .then(response => {
-//             this.setState({
-//               currentUsername: username,
-//               currentScreen: 'ChatScreen'
-//             })
+//         .then(response => response.json())
+//         .then(data => {
+//           console.log(data)
+//           this.setState({
+//             currentId: data.id,
+//             currentUsername: data.name,
+//             currentScreen: 'ChatScreen'
 //           })
-//           .catch(error => console.error('error', error))
+//         })
+//         .catch(error => console.error('error', error))
 //       }
 
 //   render() {
-// /* 
- 
-// The username submission is not adding any user to the /users endpoint
-// thus this conditional doesn't open the chatscreen when a username is submitted
-// .... don't know why, but am guessing it has to do with the server.
-
-// */
 //       if (this.state.currentScreen === 'usernameInputScreen') {
 //        return <UsernameForm handleSubmit = {this.onUsernameSubmitted}/>
 //       }
 //      if (this.state.currentScreen === 'ChatScreen') {
 //       return <Layout Sidebar={Sidebar} Chatbox={() => <Chatbox currentId={this.state.currentId} />} />
 //     }
-    
 //   }
 // }
 

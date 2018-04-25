@@ -39,7 +39,7 @@ class WhosOnlineListItem extends Component {
       <li className="li">
         <div className="div"          
         />
-        {/* {this.props.presenceState === 'online' ? '#539eff' : '#414756'} */}
+        
         {this.props.children}
       </li>
     )
