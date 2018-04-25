@@ -4,15 +4,17 @@ import Chatkit from '@pusher/chatkit'
 import MessageList from '../MessageList/messagelist'
 import SendMessageForm from'../SendMessageForm/SendMessageForm'
 //import TypingIndicator from'../TypingIndicator/TypingIndicator'
-import WhosOnlineList from '../WhosOnlineList/WhosOnlineList'
+//import WhosOnlineList from '../WhosOnlineList/WhosOnlineList'
 import {
   ListView,
   ListViewSection,
   ListViewSectionHeader,
   ListViewRow,
-  Text
+  Text,
+   TextInput,
+   Button
 } from 'react-desktop/macOs';
-
+import Sidebar from '../Sidebar';
 
 
 class Chatbox extends Component {
@@ -77,9 +79,9 @@ componentDidMount () {
                       //   })
                       // },
 
-                      onUserCameOnline: () => this.forceUpdate(),
+                      /*onUserCameOnline: () => this.forceUpdate(),
                       onUserWentOffline: () => this.forceUpdate(),
-                      onUserJoined: () => this.forceUpdate() 
+                      onUserJoined: () => this.forceUpdate() */
 
                     },
                   })
@@ -113,6 +115,22 @@ componentDidMount () {
           </ListViewSection>
         </ListView>
         <SendMessageForm onSubmit={this.sendMessage} /* onChange={this.sendTypingEvent}*/ />
+
+        {/* <form className="message-values" onSubmit={this.handleSubmit}>
+          <TextInput
+            placeholder="Type message here and hit ENTER"
+            value={this.state.text}
+            className="message-text"
+            onChange={this.handleChange}
+          />
+          <Button
+            color="blue"
+            type="submit"
+            // onClick={() => console.log('Clicked!')}
+          >
+            Press me!
+          </Button>
+        </form>  */}
       
       </div>
     );
@@ -129,20 +147,17 @@ componentDidMount () {
         layout="vertical"
         background={this.state.selected === title ? '#d8dadc' : null}
       >
-      
-          <Text color="#414141" size="13" bold>
+        
+        {/* <WhosOnlineList
+              currentUser={this.state.currentUser}
+              users={this.state.currentRoom.users}
+      /> */}
+          {/* <Text color="#414141" size="13" bold>
             Title:
           </Text>
           <Text color="#414141" size="13">
             {info}
           </Text> */}
-      
-          {/* 
-          
-          <WhosOnlineList
-              currentUser={this.state.currentUser}
-              users={this.state.currentRoom.users}
-      /> */}
        
       </ListViewRow>
     );
