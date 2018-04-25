@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Sidebar.css';
+import WhosOnlineList from '../WhosOnlineList/WhosOnlineList'
 import {
   ListView,
   ListViewSection,
@@ -18,9 +19,7 @@ class Sidebar extends Component {
     return (
       <ListView background="#e1e1e1" width="300" height="600">
         <ListViewSection header={this.renderSectionHeader('Users')}>
-          {this.renderItem('Item 1', 'This is the first item.')}
-          {this.renderItem('Item 2', 'This is the second item.')}
-          {this.renderItem('Item 3', 'This is the third item.')}
+        <h2>User Who are online Appears here</h2>
         </ListViewSection>
       </ListView>
     );
@@ -46,3 +45,4 @@ class Sidebar extends Component {
 }
 
 export default Sidebar;
+

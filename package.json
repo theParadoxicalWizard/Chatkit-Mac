@@ -5,12 +5,9 @@
   "main": "src/electron-starter.js",
   "homepage": "./",
   "dependencies": {
-<<<<<<< HEAD
     "@pusher/chatkit": "^0.7.9",
     "cors": "^2.8.4",
     "pusher-chatkit-server": "^0.11.2",
-=======
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
     "react": "^16.3.2",
     "react-desktop": "^0.3.5",
     "react-dom": "^16.3.2",
@@ -21,11 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-<<<<<<< HEAD
     "electron": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
-=======
-    "electron": "ELECTRON_START_URL=http://localhost:3000 electron ."
->>>>>>> 8da14c572de48dbd11bd1355f4632fbd9edd3854
   },
   "devDependencies": {
     "electron": "^1.8.4"

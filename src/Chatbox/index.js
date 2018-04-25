@@ -1,30 +1,184 @@
 import React, { Component } from 'react';
 import './Chatbox.css';
 import Chatkit from '@pusher/chatkit'
+import MessageList from '../MessageList/messagelist'
+import SendMessageForm from'../SendMessageForm/SendMessageForm'
+//import TypingIndicator from'../TypingIndicator/TypingIndicator'
+import WhosOnlineList from '../WhosOnlineList/WhosOnlineList'
 import {
   ListView,
   ListViewSection,
   ListViewSectionHeader,
   ListViewRow,
-  Text,
-  TextInput,
-  Button
+  Text
 } from 'react-desktop/macOs';
+
+
 
 class Chatbox extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: {}
+      currentUser: {},
+      currentRoom: {},
+      text: "",
+      messages: [],
+      //usersWhoAreTypin: []
     };
+    this.sendMessage = this.sendMessage.bind(this)
+    //this.TypingIndicator = this.sendTypingEvent.bind(this)
   }
 
-  /*
+  // sendTypingEvent() {
+  //     this.state.currentUser
+  //       .isTypingIn({ roomId: this.state.currentRoom.id })
+  //       .catch(error => console.error('error', error))
+  //     }
 
-  In the componentDidMount() method below, i'm trying to connect the chatbox with my chatkit instance, if i uncomment 
-  it, the ChatBox screen wont render, it'll throw a TypeError :
-  "expected userId to be of type string but was of type undefined"
-*/
+  sendMessage(text) {
+      this.state.currentUser.sendMessage({
+        text,
+        roomId: this.state.currentRoom.id,
+      })
+    }
+componentDidMount () {
+    const chatManager = new Chatkit.ChatManager({
+      instanceLocator: 'v1:us1:f722c949-ddf2-4e88-908e-20ff810e0e21',
+      userId: this.props.currentId, 
+      tokenProvider: new Chatkit.TokenProvider({
+        url: 'http://localhost:3001/authenticate',
+      }),
+    })
+
+    chatManager
+      .connect()
+      .then(currentUser => {
+        console.log(currentUser)
+        this.setState({ currentUser })
+                return currentUser.subscribeToRoom({
+                    roomId: 6855151,
+                    messageLimit: 100,
+                    hooks: {
+                      onNewMessage: message => {
+                        this.setState({
+                          messages: [...this.state.messages, message],
+                        })
+                      },
+                      // onUserStartedTyping: user => {
+                      //   this.setState({
+                      //     usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name],
+                      //   })
+                      // },
+                      // onUserStoppedTyping: user => {
+                      //   this.setState({
+                      //     usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+                      //       username => username !== user.name
+                      //     ),
+                      //   })
+                      // },
+
+                      onUserCameOnline: () => this.forceUpdate(),
+                      onUserWentOffline: () => this.forceUpdate(),
+                      onUserJoined: () => this.forceUpdate() 
+
+                    },
+                  })
+                })
+                .then(currentRoom => {
+                  this.setState({ currentRoom })
+                 })
+      .catch(error => console.error('error', error))
+  }
+
+  handleChange = e => {
+    console.log(e.target.value);
+  }
+
+  handleSubmit = e => {
+    console.log('handleSubmit');
+  };
+
+  render() {
+    return (
+      <div>
+        <ListView background="#f1f2f4" width="500" height="555">
+          <ListViewSection header={this.renderSectionHeader('Messages')}>
+           
+            <MessageList
+              messages={this.state.messages}
+              className="message-list-style"
+            />
+            {/* <TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} /> */}
+           
+          </ListViewSection>
+        </ListView>
+        <SendMessageForm onSubmit={this.sendMessage} /* onChange={this.sendTypingEvent}*/ />
+      
+      </div>
+    );
+  }
+
+  renderSectionHeader(title) {
+    return <ListViewSectionHeader>{title}</ListViewSectionHeader>;
+  }
+
+  renderItem(title, info) {
+    return (
+      <ListViewRow
+        onClick={() => this.setState({ selected: title })}
+        layout="vertical"
+        background={this.state.selected === title ? '#d8dadc' : null}
+      >
+      
+          <Text color="#414141" size="13" bold>
+            Title:
+          </Text>
+          <Text color="#414141" size="13">
+            {info}
+          </Text> */}
+      
+          {/* 
+          
+          <WhosOnlineList
+              currentUser={this.state.currentUser}
+              users={this.state.currentRoom.users}
+      /> */}
+       
+      </ListViewRow>
+    );
+  }
+}
+
+export default Chatbox;
+
+
+// import React, { Component } from 'react';
+// import './Chatbox.css';
+// import Chatkit from '@pusher/chatkit'
+// import {
+//   ListView,
+//   ListViewSection,
+//   ListViewSectionHeader,
+//   ListViewRow,
+//   Text,
+//   TextInput,
+//   Button
+// } from 'react-desktop/macOs';
+
+// class Chatbox extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       currentUser: {}
+//     };
+//   }
+
+//   /*
+
+//   In the componentDidMount() method below, i'm trying to connect the chatbox with my chatkit instance, if i uncomment 
+//   it, the ChatBox screen wont render, it'll throw a TypeError :
+//   "expected userId to be of type string but was of type undefined"
+// */
   
 // componentDidMount () {
 //     const chatManager = new Chatkit.ChatManager({
@@ -43,65 +197,65 @@ class Chatbox extends Component {
 //       .catch(error => console.error('error', error))
 //   }
 
-  handleChange = e => console.log(e.target.value);
+//   handleChange = e => console.log(e.target.value);
 
-  handleSubmit = e => {
-    e.preventDefault();
-    console.log('asshole');
-  };
+//   handleSubmit = e => {
+//     e.preventDefault();
+//     console.log('asshole');
+//   };
 
-  render() {
-    return (
-      <div>
-        <ListView background="#f1f2f4" width="500" height="555">
-          <ListViewSection header={this.renderSectionHeader('Messages')}>
-            {this.renderItem('Item 1', 'This is the first item.')}
-            {this.renderItem('Item 2', 'This is the second item.')}
-            {this.renderItem('Item 3', 'This is the third item.')}
-          </ListViewSection>
-        </ListView>
-        <form className="message" onSubmit={this.handleSubmit}>
-          <TextInput
-            placeholder="Type message here and hit ENTER"
-            defaultValue=""
-            className="message-text"
-            onChange={this.handleChange}
-          />
-          <Button
-            color="blue"
-            type="submit"
-            onClick={() => console.log('Clicked!')}
-          >
-            Press me!
-          </Button>
-        </form> 
+//   render() {
+//     return (
+//       <div>
+//         <ListView background="#f1f2f4" width="500" height="555">
+//           <ListViewSection header={this.renderSectionHeader('Messages')}>
+//             {this.renderItem('Item 1', 'This is the first item.')}
+//             {this.renderItem('Item 2', 'This is the second item.')}
+//             {this.renderItem('Item 3', 'This is the third item.')}
+//           </ListViewSection>
+//         </ListView>
+//         <form className="message" onSubmit={this.handleSubmit}>
+//           <TextInput
+//             placeholder="Type message here and hit ENTER"
+//             defaultValue=""
+//             className="message-text"
+//             onChange={this.handleChange}
+//           />
+//           <Button
+//             color="blue"
+//             type="submit"
+//             onClick={() => console.log('Clicked!')}
+//           >
+//             Press me!
+//           </Button>
+//         </form> 
       
-      </div>
-    );
-  }
+//       </div>
+//     );
+//   }
 
-  renderSectionHeader(title) {
-    return <ListViewSectionHeader>{title}</ListViewSectionHeader>;
-  }
+//   renderSectionHeader(title) {
+//     return <ListViewSectionHeader>{title}</ListViewSectionHeader>;
+//   }
 
-  renderItem(title, info) {
-    return (
-      <ListViewRow
-        onClick={() => this.setState({ selected: title })}
-        layout="vertical"
-        background={this.state.selected === title ? '#d8dadc' : null}
-      >
-        <div>
-          <Text color="#414141" size="13" bold>
-            Title:
-          </Text>
-          <Text color="#414141" size="13">
-            {info}
-          </Text>
-        </div>
-      </ListViewRow>
-    );
-  }
-}
+//   renderItem(title, info) {
+//     return (
+//       <ListViewRow
+//         onClick={() => this.setState({ selected: title })}
+//         layout="vertical"
+//         background={this.state.selected === title ? '#d8dadc' : null}
+//       >
+//         <div>
+//           <Text color="#414141" size="13" bold>
+//             Title:
+//           </Text>
+//           <Text color="#414141" size="13">
+//             {info}
+//           </Text>
+//         </div>
+//       </ListViewRow>
+//     );
+//   }
+// }
 
-export default Chatbox;
+// export default Chatbox;
