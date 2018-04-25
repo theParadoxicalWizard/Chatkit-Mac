@@ -20,6 +20,10 @@ class Sidebar extends Component {
       <ListView background="#e1e1e1" width="300" height="600">
         <ListViewSection header={this.renderSectionHeader('Users')}>
         <h2>User Who are online Appears here</h2>
+        <WhosOnlineList
+              currentUser={this.props.currentUser}
+              users={this.props.users}
+            />
         </ListViewSection>
       </ListView>
     );

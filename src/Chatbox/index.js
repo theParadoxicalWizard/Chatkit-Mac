@@ -16,87 +16,13 @@ import {
 
 
 class Chatbox extends Component {
+  
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      currentUser: {},
-      currentRoom: {},
-      text: "",
-      messages: [],
-      //usersWhoAreTypin: []
-    };
-    this.sendMessage = this.sendMessage.bind(this)
-    //this.TypingIndicator = this.sendTypingEvent.bind(this)
-  }
-
-  // sendTypingEvent() {
-  //     this.state.currentUser
-  //       .isTypingIn({ roomId: this.state.currentRoom.id })
-  //       .catch(error => console.error('error', error))
-  //     }
-
-  sendMessage(text) {
-      this.state.currentUser.sendMessage({
-        text,
-        roomId: this.state.currentRoom.id,
-      })
+      text: '',
     }
-componentDidMount () {
-    const chatManager = new Chatkit.ChatManager({
-      instanceLocator: 'v1:us1:f722c949-ddf2-4e88-908e-20ff810e0e21',
-      userId: this.props.currentId, 
-      tokenProvider: new Chatkit.TokenProvider({
-        url: 'http://localhost:3001/authenticate',
-      }),
-    })
-
-    chatManager
-      .connect()
-      .then(currentUser => {
-        console.log(currentUser)
-        this.setState({ currentUser })
-                return currentUser.subscribeToRoom({
-                    roomId: 6855151,
-                    messageLimit: 100,
-                    hooks: {
-                      onNewMessage: message => {
-                        this.setState({
-                          messages: [...this.state.messages, message],
-                        })
-                      },
-                      // onUserStartedTyping: user => {
-                      //   this.setState({
-                      //     usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name],
-                      //   })
-                      // },
-                      // onUserStoppedTyping: user => {
-                      //   this.setState({
-                      //     usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
-                      //       username => username !== user.name
-                      //     ),
-                      //   })
-                      // },
-
-                      onUserCameOnline: () => this.forceUpdate(),
-                      onUserWentOffline: () => this.forceUpdate(),
-                      onUserJoined: () => this.forceUpdate() 
-
-                    },
-                  })
-                })
-                .then(currentRoom => {
-                  this.setState({ currentRoom })
-                 })
-      .catch(error => console.error('error', error))
   }
-
-  handleChange = e => {
-    console.log(e.target.value);
-  }
-
-  handleSubmit = e => {
-    console.log('handleSubmit');
-  };
 
   render() {
     return (
@@ -105,14 +31,14 @@ componentDidMount () {
           <ListViewSection header={this.renderSectionHeader('Messages')}>
            
             <MessageList
-              messages={this.state.messages}
+              messages={this.props.messages}
               className="message-list-style"
             />
             {/* <TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} /> */}
            
           </ListViewSection>
         </ListView>
-        <SendMessageForm onSubmit={this.sendMessage} /* onChange={this.sendTypingEvent}*/ />
+        <SendMessageForm onSubmit={this.props.sendMessage} /* onChange={this.sendTypingEvent}*/ />
       
       </div>
     );
