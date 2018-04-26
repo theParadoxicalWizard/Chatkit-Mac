@@ -1,7 +1,6 @@
 import React from 'react';
 import Chatkit from '@pusher/chatkit';
 import './Layout.css';
-import TypingIndicator from '../TypingIndicator/TypingIndicator'
 
 class Layout extends React.Component {
   constructor(props) {
@@ -16,14 +15,14 @@ class Layout extends React.Component {
       usersWhoAreTyping: []
     };
     this.sendMessage = this.sendMessage.bind(this);
-    this.sendTypingEvent = this.sendTypingEvent.bind(this)
+    this.sendTypingEvent = this.sendTypingEvent.bind(this);
   }
 
   sendTypingEvent() {
-      this.state.currentUser
-        .isTypingIn({ roomId: this.state.currentRoom.id })
-        .catch(error => console.error('error', error))
-      }
+    this.state.currentUser
+      .isTypingIn({ roomId: this.state.currentRoom.id })
+      .catch(error => console.error('error', error));
+  }
 
   sendMessage(text) {
     this.state.currentUser.sendMessage({
@@ -33,7 +32,7 @@ class Layout extends React.Component {
   }
   componentDidMount() {
     const chatManager = new Chatkit.ChatManager({
-      instanceLocator: 'v1:us1:f722c949-ddf2-4e88-908e-20ff810e0e21',
+      instanceLocator: 'v1:us1:6061072e-71d1-492e-9989-20258f1fc9ca',
       userId: this.props.currentId,
       tokenProvider: new Chatkit.TokenProvider({
         url: 'http://localhost:3001/authenticate'
@@ -43,10 +42,9 @@ class Layout extends React.Component {
     chatManager
       .connect()
       .then(currentUser => {
-        console.log(currentUser);
         this.setState({ currentUser });
         return currentUser.subscribeToRoom({
-          roomId: 6855151,
+          roomId: 6963803,
           messageLimit: 100,
           hooks: {
             onNewMessage: message => {
@@ -56,15 +54,15 @@ class Layout extends React.Component {
             },
             onUserStartedTyping: user => {
               this.setState({
-                usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name],
-              })
+                usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name]
+              });
             },
             onUserStoppedTyping: user => {
               this.setState({
                 usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
                   username => username !== user.name
-                ),
-              })
+                )
+              });
             },
 
             onUserCameOnline: () => this.forceUpdate(),
@@ -78,22 +76,15 @@ class Layout extends React.Component {
       })
       .catch(error => console.error('error', error));
   }
-  handleChange = e => {
-    console.log(e.target.value);
-  };
-
-  handleSubmit = e => {
-    console.log('handleSubmit');
-  };
   render() {
-    const { Chatbox, Sidebar, TypingIndicator } = this.props;
+    const { Chatbox, Sidebar } = this.props;
     return (
       <div className="wrapper">
         <div className="left">
-          {/* <h1>Title</h1> */}
           <Sidebar
             currentUser={this.state.currentUser}
             users={this.state.currentRoom.users}
+            usersWhoAreTyping={this.state.usersWhoAreTyping}
           />
         </div>
 
@@ -101,36 +92,14 @@ class Layout extends React.Component {
           <Chatbox
             messages={this.state.messages}
             sendMessage={this.sendMessage}
+            onChange={this.sendTypingEvent}
+            sendTypingEvent={this.sendTypingEvent}
+            usersWhoAreTyping={this.state.usersWhoAreTyping}
           />
-
         </div>
-
-        <div className="bottom">
-          <TypingIndicator 
-              usersWhoAreTyping={this.state.usersWhoAreTyping} />
-        </div>
-        
       </div>
     );
   }
 }
 
 export default Layout;
-
-// import React from 'react';
-// import './Layout.css';
-
-// const Layout = ({ Sidebar, Chatbox }) => (
-//   <div className="wrapper">
-//     <div className="left">
-//       {/* <h1>Title</h1> */}
-//       <Sidebar />
-//     </div>
-//     <div className="right">
-//       <Chatbox />
-//     </div>
-//   </div>
-// );
-
-
-// export default Layout;
