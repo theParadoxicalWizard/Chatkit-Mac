@@ -9,5 +9,5 @@ A demo that shows how to use Pusher Chatkit and React in building a native deskt
 - Clone the repository
 - Install all dependencies with `npm install`. This will take longer than normal because of the Electron scripts
 - Start the auth server with `npm run server`
-- Start the React app with `npm start`. This will open the React app in a browser. Ignore the browser and move to the next step.
+- In another terminal window, start the React app with `npm start`. This will open the React app in a browser. Ignore the browser and move to the next step.
 - Start the desktop app with `npm run electron`
