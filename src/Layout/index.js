@@ -44,7 +44,7 @@ class Layout extends React.Component {
       .then(currentUser => {
         this.setState({ currentUser });
         return currentUser.subscribeToRoom({
-          roomId: 6963803,
+          roomId: 21140875,
           messageLimit: 100,
           hooks: {
             onNewMessage: message => {
