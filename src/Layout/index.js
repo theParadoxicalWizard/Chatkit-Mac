@@ -32,7 +32,7 @@ class Layout extends React.Component {
   }
   componentDidMount() {
     const chatManager = new Chatkit.ChatManager({
-      instanceLocator: 'v1:us1:6061072e-71d1-492e-9989-20258f1fc9ca',
+      instanceLocator: 'v1:us1:fd0b2176-5481-4452-9424-f599f0bcee05',
       userId: this.props.currentId,
       tokenProvider: new Chatkit.TokenProvider({
         url: 'http://localhost:3001/authenticate'
